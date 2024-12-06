@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+
+  <head>
+    <title>Tặng bé yêu</title>
+    <meta name="Generator" content="EditPlus" />
+    <meta name="Author" content="" />
+    <meta name="Keywords" content="" />
+    <meta name="Description" content="" />
+
+    <style>
+      html,
+      body {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        color: #ff5ca4;
+        margin: 0;
+      }
+
+      p {
+        color: red; /* Đổi thành màu đỏ */
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .box {
+        width: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      canvas {
+        position: relative;
+      }
+
+      #pinkboard {
+        margin: auto;
+        height: 500px;
+        width: 500px;
+        animation: animate 2s infinite;
+      }
+
+      @keyframes animate {
+        0% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(0.8);
+        }
+        60% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>😡</h1>
+    <div class="box">
+      <canvas id="pinkboard"></canvas>
+      <p>KHÔNG THÍCH TRẢ LỜI</p>
+    </div>
+
+    <script>
+      var settings = {
+        particles: {
+          length: 1000,
+          duration: 3,
+          velocity: 100,
+          effect: -0.75,
+          size: 13,
+        },
+      };
+
+      (function (canvas) {
+        var context = canvas.getContext("2d"),
+          particles = [],
+          particleRate =
+            settings.particles.length / settings.particles.duration,
+          time;
+
+        function drawAngryFace(context) {
+          // Draw face (circle)
+          context.beginPath();
+          context.arc(0, 0, 150, 0, Math.PI * 2, true);
+          context.fillStyle = "#FF5CA4";
+          context.fill();
+          context.closePath();
+
+          // Draw eyes
+          context.beginPath();
+          context.arc(-50, -50, 20, 0, Math.PI * 2, true); // Left eye
+          context.arc(50, -50, 20, 0, Math.PI * 2, true); // Right eye
+          context.fillStyle = "#000";
+          context.fill();
+          context.closePath();
+
+          // Draw angry eyebrows
+          context.beginPath();
+          context.moveTo(-70, -70);
+          context.lineTo(-20, -90);
+          context.moveTo(70, -70);
+          context.lineTo(20, -90);
+          context.strokeStyle = "#000";
+          context.lineWidth = 5;
+          context.stroke();
+          context.closePath();
+
+          // Draw mouth (frown)
+          context.beginPath();
+          context.arc(0, 50, 50, Math.PI, 2 * Math.PI, true);
+          context.strokeStyle = "#000";
+          context.lineWidth = 5;
+          context.stroke();
+          context.closePath();
+        }
+
+        function render() {
+          requestAnimationFrame(render);
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          context.save();
+          context.translate(canvas.width / 2, canvas.height / 2);
+          drawAngryFace(context);
+          context.restore();
+        }
+
+        function onResize() {
+          canvas.width = canvas.clientWidth;
+          canvas.height = canvas.clientHeight;
+        }
+
+        window.onresize = onResize;
+        setTimeout(function () {
+          onResize();
+          render();
+        }, 10);
+      })(document.getElementById("pinkboard"));
+    </script>
+  </body>
+</html>
